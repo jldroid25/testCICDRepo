@@ -12,7 +12,7 @@ jobs:
             aws cloudformation deploy \
               --template-file template.yml \
               --stack-name my-stack-test-cide \
-              --region us-west-2 
+              --region us-west-2 \
               --profile jldroid25
 workflows:
   my_workflow:
