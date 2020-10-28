@@ -9,10 +9,8 @@ jobs:
       - run:
           name: Ensure backend infrastructure exist
           command: |
-            aws cloudformation deploy 
-            --template-file template.yml 
-            --stack-name my-stack-test-cicd
-            --parameters EnvParameter=prod
+            aws cloudformation deploy --template-file template.yml --stack-name my-stack-test-cicd
+            
 workflows:
   my_workflow:
     jobs:
