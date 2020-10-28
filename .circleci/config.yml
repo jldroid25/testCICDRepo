@@ -4,6 +4,7 @@ jobs:
   create_infrastructure:
     docker:
       - image: amazon/aws-cli
+      KeyName: jldacity2
     steps:
       - checkout
       - run:
@@ -12,7 +13,7 @@ jobs:
             aws cloudformation deploy \
               --template-file template.yml \
               --stack-name my-stack-test-cide \
-              --region us-east-1
+              --region us-west-2
 workflows:
   my_workflow:
     jobs:
