@@ -4,7 +4,7 @@ jobs:
   create_infrastructure:
     docker:
       - image: amazon/aws-cli
-      KeyName: jldacity2
+        KeyName: jldacity2
     steps:
       - checkout
       - run:
