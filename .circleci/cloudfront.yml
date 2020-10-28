@@ -1,0 +1,43 @@
+Parameters:
+    Description: >
+        LEsson-4 video Promote Candidate to Production----
+            
+        We want to use CloudFormation to modify a CloudFront Distribution 
+        later on. It will be MUCH easier to do this if CloudFormation 
+        was responsible for creating the distribution in the first place,
+        thus creating a "stack" that can be easily accessed.
+
+    PipelineID:
+      Description: Unique identifier.
+      Type: String
+  
+  Resources:
+  
+    CloudFrontOriginAccessIdentity:
+      Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
+      Properties:
+        CloudFrontOriginAccessIdentityConfig:
+          Comment: Origin Access Identity for Serverless Static Website
+  
+    WebpageCDN:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          Origins:
+            - DomainName: !Sub "${PipelineID}.s3.amazonaws.com"
+              Id: webpage
+              S3OriginConfig:
+                OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
+          Enabled: True
+          DefaultRootObject: index.html
+          DefaultCacheBehavior:
+            ForwardedValues:
+              QueryString: False
+            TargetOriginId: webpage
+            ViewerProtocolPolicy: allow-all
+  
+  Outputs:
+    PipelineID:
+      Value: !Sub ${PipelineID}
+      Export:
+        Name: PipelineID
